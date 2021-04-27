@@ -152,6 +152,7 @@ export default class PublicKeyInfo
 				}
 				break;
 			case "1.2.840.113549.1.1.1": // RSA
+			case "1.2.840.113549.1.1.10": // RSA-PSS
 				{
 					const publicKeyASN1 = asn1js.fromBER(this.subjectPublicKey.valueBlock.valueHex);
 					if(publicKeyASN1.offset !== (-1))
@@ -210,6 +211,7 @@ export default class PublicKeyInfo
 				jwk.kty = "EC";
 				break;
 			case "1.2.840.113549.1.1.1": // RSA
+			case "1.2.840.113549.1.1.10": // RSA-PSS
 				jwk.kty = "RSA";
 				break;
 			default:
