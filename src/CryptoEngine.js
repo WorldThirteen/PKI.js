@@ -309,7 +309,10 @@ export default class CryptoEngine
 								jwk.ext = extractable;
 								jwk.key_ops = keyUsages;
 
-								if(publicKeyInfo.algorithm.algorithmId !== "1.2.840.113549.1.1.1")
+								if(
+									publicKeyInfo.algorithm.algorithmId !== "1.2.840.113549.1.1.1" && // RSASSA-PKCS1-V1_5
+									publicKeyInfo.algorithm.algorithmId !== "1.2.840.113549.1.1.10" // RSA-PSS
+								)
 									return Promise.reject(`Incorrect public key algorithm: ${publicKeyInfo.algorithm.algorithmId}`);
 
 								//region Get information about used hash function
