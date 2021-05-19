@@ -429,6 +429,29 @@ export default class CertificateRevocationList {
 		return false;
 	}
 	//**********************************************************************************
+	isCertificateRevokedBeforeDate(certificate, checkDate)
+	{
+		//region Check that issuer of the input certificate is the same with issuer of this CRL
+		if(this.issuer.isEqual(certificate.issuer) === false)
+			return false;
+		//endregion
+		
+		//region Check that there are revoked certificates in this CRL
+		if(("revokedCertificates" in this) === false)
+			return false;
+		//endregion
+		
+		//region Search for input certificate in revoked certificates array
+		for(const revokedCertificate of this.revokedCertificates)
+		{
+			if(revokedCertificate.userCertificate.isEqual(certificate.serialNumber))
+				return revokedCertificate.revocationDate.value <= checkDate;
+		}
+		//endregion
+		
+		return false;
+	}
+	//**********************************************************************************
 	/**
 	 * Make a signature for existing CRL data
 	 * @param {Object} privateKey Private key for "subjectPublicKeyInfo" structure

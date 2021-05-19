@@ -611,7 +611,7 @@ export default class CertificateChainValidationEngine
 							for(let j = 0; j < crlResult.result.length; j++)
 							{
 								//region Check that the CRL issuer certificate have not been revoked
-								const isCertificateRevoked = crlResult.result[j].crl.isCertificateRevoked(path[i]);
+								const isCertificateRevoked = crlResult.result[j].crl.isCertificateRevokedBeforeDate(path[i], _this.checkDate);
 								if(isCertificateRevoked)
 								{
 									return {
